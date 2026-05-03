@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <title>AI PCB Footprint Generator</title>
+    <title>AI Footprint Generator</title>
 
 ```
 <style>
@@ -10,21 +10,14 @@
         margin: 0;
         font-family: Arial, sans-serif;
         color: white;
-
-        background:
-            linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)),
-            url("https://images.unsplash.com/photo-1518770660439-4636190af475");
-
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
+        background: #020617;
     }
 
     header {
-        padding: 20px 40px;
-        background: rgba(2, 6, 23, 0.8);
         display: flex;
         justify-content: space-between;
+        padding: 20px 40px;
+        background: #020617;
     }
 
     .logo {
@@ -38,14 +31,16 @@
     }
 
     .hero h1 {
-        font-size: 42px;
+        font-size: 48px;
     }
 
     .hero p {
         color: #94a3b8;
+        font-size: 18px;
     }
 
     .cta button {
+        margin-top: 20px;
         padding: 12px 25px;
         background: #3b82f6;
         border: none;
@@ -55,23 +50,26 @@
     }
 
     .section {
-        padding: 60px 20px;
+        padding: 80px 20px;
         text-align: center;
-        background: rgba(30, 41, 59, 0.85);
-        margin: 20px;
-        border-radius: 10px;
     }
 
-    .features {
+    .steps {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 20px;
+        max-width: 900px;
+        margin: auto;
     }
 
     .card {
-        background: rgba(15, 23, 42, 0.9);
+        background: #0f172a;
         padding: 20px;
         border-radius: 10px;
+    }
+
+    .upload {
+        margin-top: 40px;
     }
 
     input, button {
@@ -83,18 +81,10 @@
         border: none;
     }
 
-    button {
-        background: #3b82f6;
-        color: white;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
     pre {
-        background: #020617;
+        background: black;
         padding: 15px;
         border-radius: 8px;
-        overflow-x: auto;
         text-align: left;
     }
 
@@ -116,8 +106,8 @@
 </header>
 
 <section class="hero">
-    <h1>Generate PCB Footprints from Datasheets</h1>
-    <p>AI-powered extraction → instant Altium-ready footprints</p>
+    <h1>Turn Datasheets into PCB Footprints</h1>
+    <p>Upload a datasheet. AI extracts dimensions and builds Altium-ready footprints automatically.</p>
 
 ```
 <div class="cta">
@@ -128,22 +118,52 @@
 </section>
 
 <section class="section">
-    <h2>Features</h2>
-    <div class="features">
-        <div class="card">
-            <h3>📄 Datasheet Parsing</h3>
-            <p>Extract package dimensions automatically</p>
-        </div>
+    <h2>How It Works</h2>
 
 ```
+<div class="steps">
     <div class="card">
-        <h3>⚙️ Footprint Generator</h3>
-        <p>Generate pads and geometry instantly</p>
+        <h3>1. Upload</h3>
+        <p>Upload a component datasheet (PDF)</p>
     </div>
 
     <div class="card">
-        <h3>📐 Altium Ready</h3>
-        <p>Export scripts ready for use</p>
+        <h3>2. Extract</h3>
+        <p>AI reads dimensions and package details</p>
+    </div>
+
+    <div class="card">
+        <h3>3. Generate</h3>
+        <p>Footprint is created automatically</p>
+    </div>
+
+    <div class="card">
+        <h3>4. Export</h3>
+        <p>Download Altium-ready script</p>
+    </div>
+</div>
+```
+
+</section>
+
+<section class="section">
+    <h2>Why Use This?</h2>
+
+```
+<div class="steps">
+    <div class="card">
+        <h3>⚡ Faster Design</h3>
+        <p>No more manual footprint creation</p>
+    </div>
+
+    <div class="card">
+        <h3>🎯 Accurate</h3>
+        <p>Based on datasheet dimensions</p>
+    </div>
+
+    <div class="card">
+        <h3>🧠 AI Assisted</h3>
+        <p>Extracts complex package data automatically</p>
     </div>
 </div>
 ```
@@ -165,7 +185,7 @@
 </section>
 
 <footer>
-    Built for PCB Designers • AI + Electronics
+    Built for PCB Engineers • AI + Hardware
 </footer>
 
 <script>
