@@ -1,6 +1,0 @@
-fastapi
-uvicorn
-pymupdf
-pytesseract
-pillow
-openai
