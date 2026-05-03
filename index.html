@@ -9,16 +9,22 @@
     body {
         margin: 0;
         font-family: Arial, sans-serif;
-        background: #0f172a;
         color: white;
+
+        background:
+            linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)),
+            url("https://images.unsplash.com/photo-1518770660439-4636190af475");
+
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
     }
 
     header {
         padding: 20px 40px;
-        background: #020617;
+        background: rgba(2, 6, 23, 0.8);
         display: flex;
         justify-content: space-between;
-        align-items: center;
     }
 
     .logo {
@@ -28,21 +34,15 @@
 
     .hero {
         text-align: center;
-        padding: 80px 20px;
+        padding: 100px 20px;
     }
 
     .hero h1 {
         font-size: 42px;
-        margin-bottom: 20px;
     }
 
     .hero p {
         color: #94a3b8;
-        font-size: 18px;
-    }
-
-    .cta {
-        margin-top: 30px;
     }
 
     .cta button {
@@ -51,31 +51,27 @@
         border: none;
         border-radius: 6px;
         color: white;
-        font-size: 16px;
         cursor: pointer;
     }
 
     .section {
         padding: 60px 20px;
         text-align: center;
+        background: rgba(30, 41, 59, 0.85);
+        margin: 20px;
+        border-radius: 10px;
     }
 
     .features {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 20px;
-        max-width: 900px;
-        margin: auto;
     }
 
     .card {
-        background: #1e293b;
+        background: rgba(15, 23, 42, 0.9);
         padding: 20px;
         border-radius: 10px;
-    }
-
-    .upload-box {
-        margin-top: 30px;
     }
 
     input, button {
@@ -92,6 +88,14 @@
         color: white;
         font-weight: bold;
         cursor: pointer;
+    }
+
+    pre {
+        background: #020617;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-x: auto;
+        text-align: left;
     }
 
     footer {
@@ -113,11 +117,11 @@
 
 <section class="hero">
     <h1>Generate PCB Footprints from Datasheets</h1>
-    <p>Upload a datasheet and let AI extract dimensions and build Altium-ready footprints automatically.</p>
+    <p>AI-powered extraction → instant Altium-ready footprints</p>
 
 ```
 <div class="cta">
-    <button onclick="document.getElementById('upload').scrollIntoView()">Try It Now</button>
+    <button onclick="scrollToUpload()">Try It Now</button>
 </div>
 ```
 
@@ -128,39 +132,34 @@
     <div class="features">
         <div class="card">
             <h3>📄 Datasheet Parsing</h3>
-            <p>Extract dimensions directly from PDFs using AI</p>
+            <p>Extract package dimensions automatically</p>
         </div>
 
 ```
     <div class="card">
         <h3>⚙️ Footprint Generator</h3>
-        <p>Create accurate pad layouts automatically</p>
+        <p>Generate pads and geometry instantly</p>
     </div>
 
     <div class="card">
         <h3>📐 Altium Ready</h3>
-        <p>Export scripts ready for Altium Designer</p>
+        <p>Export scripts ready for use</p>
     </div>
 </div>
 ```
 
-</section>
-
-<section class="section">
-    <h2>How It Works</h2>
-    <p>Upload → AI extracts dimensions → Footprint generated → Download script</p>
 </section>
 
 <section class="section" id="upload">
     <h2>Try It</h2>
 
 ```
-<div class="upload-box">
-    <input type="file" id="fileInput" />
-    <button onclick="uploadFile()">Generate Footprint</button>
+<input type="file" id="fileInput" />
+<button onclick="uploadFile()">Generate Footprint</button>
 
-    <pre id="output"></pre>
-</div>
+<p id="status"></p>
+
+<pre id="output">No data yet...</pre>
 ```
 
 </section>
@@ -170,13 +169,20 @@
 </footer>
 
 <script>
+function scrollToUpload() {
+    document.getElementById("upload").scrollIntoView({ behavior: "smooth" });
+}
+
 async function uploadFile() {
     const file = document.getElementById("fileInput").files[0];
+    const status = document.getElementById("status");
 
     if (!file) {
         alert("Select a file first");
         return;
     }
+
+    status.innerText = "Processing...";
 
     const formData = new FormData();
     formData.append("file", file);
@@ -192,8 +198,10 @@ async function uploadFile() {
         document.getElementById("output").textContent =
             JSON.stringify(result.data, null, 2);
 
+        status.innerText = "Done ✅";
+
     } catch (err) {
-        document.getElementById("output").textContent = "Error processing file";
+        status.innerText = "Error ❌ (backend not connected)";
     }
 }
 </script>
