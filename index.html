@@ -1,230 +1,569 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <title>AI Footprint Generator</title>
-
-```
-<style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        color: white;
-        background: #020617;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sparkgap.AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @media print {
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      body { margin: 0 !important; }
     }
-
-    header {
-        display: flex;
-        justify-content: space-between;
-        padding: 20px 40px;
-        background: #020617;
-    }
-
-    .logo {
-        font-weight: bold;
-        font-size: 20px;
-    }
-
-    .hero {
-        text-align: center;
-        padding: 100px 20px;
-    }
-
-    .hero h1 {
-        font-size: 48px;
-    }
-
-    .hero p {
-        color: #94a3b8;
-        font-size: 18px;
-    }
-
-    .cta button {
-        margin-top: 20px;
-        padding: 12px 25px;
-        background: #3b82f6;
-        border: none;
-        border-radius: 6px;
-        color: white;
-        cursor: pointer;
-    }
-
-    .section {
-        padding: 80px 20px;
-        text-align: center;
-    }
-
-    .steps {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-        max-width: 900px;
-        margin: auto;
-    }
-
-    .card {
-        background: #0f172a;
-        padding: 20px;
-        border-radius: 10px;
-    }
-
-    .upload {
-        margin-top: 40px;
-    }
-
-    input, button {
-        margin-top: 10px;
-        padding: 10px;
-        width: 100%;
-        max-width: 400px;
-        border-radius: 6px;
-        border: none;
-    }
-
-    pre {
-        background: black;
-        padding: 15px;
-        border-radius: 8px;
-        text-align: left;
-    }
-
-    footer {
-        text-align: center;
-        padding: 20px;
-        color: #64748b;
-    }
-</style>
-```
-
+  </style>
 </head>
+<body style="margin:0">
+<script src="https://cdn.tailwindcss.com"></script>
 
-<body>
+<style>
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.05); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+  .glow-pulse { animation: pulse-glow 4s ease-in-out infinite; }
+  .float-anim { animation: float 6s ease-in-out infinite; }
+  .gradient-text {
+    background: linear-gradient(135deg, #a855f7, #6366f1, #38bdf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .glow-border {
+    border: 1px solid rgba(139,92,246,0.4);
+    box-shadow: 0 0 20px rgba(139,92,246,0.15), inset 0 0 20px rgba(139,92,246,0.05);
+  }
+  .glow-border-indigo {
+    border: 1px solid rgba(99,102,241,0.4);
+    box-shadow: 0 0 20px rgba(99,102,241,0.15), inset 0 0 20px rgba(99,102,241,0.05);
+  }
+  .hero-bg-glow {
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139,92,246,0.18) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 20% 60%, rgba(99,102,241,0.1) 0%, transparent 60%),
+                radial-gradient(ellipse 30% 30% at 80% 80%, rgba(56,189,248,0.08) 0%, transparent 60%);
+  }
+  .card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 40px rgba(139,92,246,0.25), 0 0 0 1px rgba(139,92,246,0.5);
+  }
+  .grid-bg {
+    background-image: linear-gradient(rgba(139,92,246,0.06) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(139,92,246,0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+</style>
 
-<header>
-    <div class="logo">AI PCB Tool</div>
-    <div>Footprint Generator</div>
-</header>
+<!-- NAV -->
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/5 backdrop-blur-xl" style="background: rgba(10,10,15,0.85);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #a855f7, #6366f1);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
+        <span class="text-white font-bold text-lg tracking-tight">Sparkgap<span style="color:#a855f7;">.AI</span></span>
+      </div>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#features" class="text-sm text-gray-400 hover:text-white transition-colors">Features</a>
+        <a href="#how" class="text-sm text-gray-400 hover:text-white transition-colors">How it works</a>
+        <a href="#testimonials" class="text-sm text-gray-400 hover:text-white transition-colors">Reviews</a>
+        <a href="#waitlist" class="text-sm text-gray-400 hover:text-white transition-colors">Pricing</a>
+      </div>
+      <div class="hidden md:flex items-center gap-3">
+        <a href="#waitlist" class="text-sm text-gray-300 hover:text-white transition-colors px-4 py-2">Sign in</a>
+        <a href="#waitlist" class="text-sm text-white px-4 py-2 rounded-lg font-medium transition-all" style="background: linear-gradient(135deg, #a855f7, #6366f1);">Get early access</a>
+      </div>
+      <button class="md:hidden text-gray-400 hover:text-white">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
 
-<section class="hero">
-    <h1>Turn Datasheets into PCB Footprints</h1>
-    <p>Upload a datasheet. AI extracts dimensions and builds Altium-ready footprints automatically.</p>
+<!-- HERO -->
+<section class="relative min-h-screen flex items-center pt-16 grid-bg" style="background-color: #0a0a0f;">
+  <div class="hero-bg-glow absolute inset-0 pointer-events-none"></div>
+  <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full glow-pulse pointer-events-none" style="background: radial-gradient(ellipse, rgba(139,92,246,0.2) 0%, transparent 70%); filter: blur(40px);"></div>
 
-```
-<div class="cta">
-    <button onclick="scrollToUpload()">Try It Now</button>
-</div>
-```
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-8 text-xs font-medium tracking-wide" style="background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.3); color: #c084fc;">
+      <span class="w-1.5 h-1.5 rounded-full bg-purple-400 inline-block" style="box-shadow: 0 0 6px #a855f7;"></span>
+      Now in Beta — Join 2,400+ engineers on the waitlist
+    </div>
 
+    <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight mb-6 tracking-tight">
+      Design PCBs<br/>
+      <span class="gradient-text">10× faster</span> with AI
+    </h1>
+
+    <p class="text-gray-400 text-base sm:text-lg lg:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+      Sparkgap.AI turns your schematic into a production-ready PCB layout in seconds — routing traces, placing components, and catching DRC errors before you do.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <a href="#waitlist" class="w-full sm:w-auto px-8 py-4 rounded-xl text-white font-semibold text-sm tracking-wide transition-all hover:scale-105" style="background: linear-gradient(135deg, #a855f7, #6366f1); box-shadow: 0 0 30px rgba(139,92,246,0.4);">
+        Try for free →
+      </a>
+      <a href="#demo" class="w-full sm:w-auto px-8 py-4 rounded-xl text-gray-300 font-semibold text-sm tracking-wide flex items-center justify-center gap-2 transition-all hover:text-white glow-border">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+        Watch demo
+      </a>
+    </div>
+
+    <div class="mt-20 float-anim">
+      <div class="relative mx-auto max-w-4xl rounded-2xl p-px" style="background: linear-gradient(135deg, rgba(139,92,246,0.5), rgba(99,102,241,0.3), rgba(56,189,248,0.2));">
+        <div class="rounded-2xl p-4 sm:p-6" style="background: #0f0f18;">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="w-3 h-3 rounded-full bg-red-500 opacity-70"></span>
+            <span class="w-3 h-3 rounded-full bg-yellow-500 opacity-70"></span>
+            <span class="w-3 h-3 rounded-full bg-green-500 opacity-70"></span>
+            <span class="ml-4 text-xs text-gray-600 font-mono">sparkgap_ai — board_v3.kicad_pcb</span>
+          </div>
+          <div class="grid grid-cols-12 gap-3 h-48 sm:h-64">
+            <div class="col-span-8 rounded-xl relative overflow-hidden" style="background: #080810; border: 1px solid rgba(99,102,241,0.2);">
+              <!-- PCB mock grid -->
+              <svg class="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                <defs><pattern id="pcbgrid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="#6366f1" stroke-width="0.5"/></pattern></defs>
+                <rect width="400" height="300" fill="url(#pcbgrid)"/>
+              </svg>
+              <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 300">
+                <!-- Traces -->
+                <path d="M 80 80 L 200 80 L 200 150 L 320 150" stroke="#a855f7" stroke-width="2" fill="none" opacity="0.8"/>
+                <path d="M 120 180 L 280 180 L 280 220" stroke="#38bdf8" stroke-width="1.5" fill="none" opacity="0.6"/>
+                <path d="M 60 220 L 160 220 L 160 180" stroke="#a855f7" stroke-width="1.5" fill="none" opacity="0.5"/>
+                <path d="M 200 60 L 200 30 L 350 30 L 350 120" stroke="#6366f1" stroke-width="2" fill="none" opacity="0.7"/>
+                <!-- Pads -->
+                <rect x="70" y="70" width="20" height="20" rx="3" fill="#6366f1" opacity="0.8"/>
+                <rect x="110" y="170" width="20" height="20" rx="3" fill="#6366f1" opacity="0.8"/>
+                <rect x="50" y="210" width="20" height="20" rx="3" fill="#a855f7" opacity="0.8"/>
+                <rect x="340" y="140" width="20" height="20" rx="3" fill="#38bdf8" opacity="0.8"/>
+                <rect x="340" y="110" width="20" height="20" rx="3" fill="#38bdf8" opacity="0.8"/>
+                <!-- IC component -->
+                <rect x="155" y="100" width="90" height="60" rx="4" fill="none" stroke="#a855f7" stroke-width="1.5" opacity="0.9"/>
+                <text x="200" y="133" text-anchor="middle" fill="#c084fc" font-size="10" font-family="monospace">MCU</text>
+                <!-- Capacitors -->
+                <circle cx="270" cy="220" r="10" fill="none" stroke="#6366f1" stroke-width="1.5" opacity="0.7"/>
+                <circle cx="300" cy="220" r="10" fill="none" stroke="#6366f1" stroke-width="1.5" opacity="0.7"/>
+                <!-- AI highlight glow -->
+                <rect x="150" y="95" width="100" height="70" rx="6" fill="none" stroke="#a855f7" stroke-width="1" opacity="0.4"/>
+                <rect x="150" y="95" width="100" height="70" rx="6" fill="rgba(168,85,247,0.05)"/>
+              </svg>
+              <div class="absolute bottom-3 left-3 flex items-center gap-1.5 text-xs text-purple-400 font-mono" style="text-shadow: 0 0 8px rgba(168,85,247,0.8);">
+                <span class="w-1.5 h-1.5 rounded-full bg-purple-400" style="box-shadow: 0 0 4px #a855f7;"></span>
+                AI routing complete — 0 DRC errors
+              </div>
+            </div>
+            <div class="col-span-4 flex flex-col gap-2">
+              <div class="flex-1 rounded-xl p-3" style="background: #080810; border: 1px solid rgba(139,92,246,0.2);">
+                <p class="text-xs text-gray-500 mb-2 font-mono">components</p>
+                <div class="space-y-1.5">
+                  <div class="flex justify-between text-xs"><span class="text-gray-400">MCU</span><span class="text-purple-400">placed</span></div>
+                  <div class="flex justify-between text-xs"><span class="text-gray-400">Decoupling C</span><span class="text-purple-400">placed</span></div>
+                  <div class="flex justify-between text-xs"><span class="text-gray-400">Connectors</span><span class="text-indigo-400">routed</span></div>
+                  <div class="flex justify-between text-xs"><span class="text-gray-400">Power rail</span><span class="text-sky-400">optimized</span></div>
+                </div>
+              </div>
+              <div class="rounded-xl p-3" style="background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.3);">
+                <p class="text-xs text-purple-400 font-mono mb-1">AI suggestion</p>
+                <p class="text-xs text-gray-400">Bypass caps moved 2mm closer to VDD pins. Impedance improved by 12%.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-wrap justify-center gap-8 text-center">
+      <div><p class="text-2xl font-bold text-white">10×</p><p class="text-xs text-gray-500 mt-1">faster routing</p></div>
+      <div class="w-px bg-white/5 hidden sm:block"></div>
+      <div><p class="text-2xl font-bold text-white">99.8%</p><p class="text-xs text-gray-500 mt-1">DRC pass rate</p></div>
+      <div class="w-px bg-white/5 hidden sm:block"></div>
+      <div><p class="text-2xl font-bold text-white">2,400+</p><p class="text-xs text-gray-500 mt-1">engineers waitlisted</p></div>
+      <div class="w-px bg-white/5 hidden sm:block"></div>
+      <div><p class="text-2xl font-bold text-white">KiCad+</p><p class="text-xs text-gray-500 mt-1">native support</p></div>
+    </div>
+  </div>
 </section>
 
-<section class="section">
-    <h2>How It Works</h2>
-
-```
-<div class="steps">
-    <div class="card">
-        <h3>1. Upload</h3>
-        <p>Upload a component datasheet (PDF)</p>
+<!-- FEATURES -->
+<section id="features" class="py-28" style="background-color: #0a0a0f;">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #a855f7;">What it does</p>
+      <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">Intelligence built for<br class="hidden sm:block"/> hardware engineers</h2>
+      <p class="text-gray-500 text-sm max-w-xl mx-auto">From schematic import to Gerber export — Sparkgap.AI handles every layer of PCB complexity so you can focus on the engineering.</p>
     </div>
-
-    <div class="card">
-        <h3>2. Extract</h3>
-        <p>AI reads dimensions and package details</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Card 1 -->
+      <div class="card-hover rounded-2xl p-6 glow-border" style="background: linear-gradient(135deg, #0f0f1a, #0a0a14);">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.3);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </div>
+        <h3 class="text-white font-semibold text-lg mb-3">AI Auto-Router</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-5">Our diffusion-based router learns from 50,000+ real PCB layouts to place traces that minimize crosstalk, respect impedance targets, and avoid via hell.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="text-xs px-2.5 py-1 rounded-full" style="background: rgba(168,85,247,0.1); color: #c084fc; border: 1px solid rgba(168,85,247,0.2);">Differential pairs</span>
+          <span class="text-xs px-2.5 py-1 rounded-full" style="background: rgba(168,85,247,0.1); color: #c084fc; border: 1px solid rgba(168,85,247,0.2);">Length matching</span>
+          <span class="text-xs px-2.5 py-1 rounded-full" style="background: rgba(168,85,247,0.1); color: #c084fc; border: 1px solid rgba(168,85,247,0.2);">Controlled impedance</span>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="card-hover rounded-2xl p-6 glow-border-indigo" style="background: linear-gradient(135deg, #0f0f1a, #0a0a14);">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07M8.46 8.46a5 5 0 0 0 0 7.07"/>
+          </svg>
+        </div>
+        <h3 class="text-white font-semibold text-lg mb-3">Signal Integrity Assistant</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-5">Real-time electromagnetic simulation hints as you route. Sparkgap flags potential EMI issues, ground loops, and coupling before you run a full SPICE sim.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="text-xs px-2.5 py-1 rounded-full" style="background: rgba(99,102,241,0.1); color: #818cf8; border: 1px solid rgba(99,102,241,0.2);">EMI scan</span>
+          <span class="text-xs px-2.5 py-1 rounded-full" style="background: rgba(99,102,241,0.1); color: #818cf8; border: 1px solid rgba(99,102,241,0.2);">Ground plane analysis</span>
+          <span class="text-xs px-2.5 py-1 rounded-full" style="background: rgba(99,102,241,0.1); color: #818cf8; border: 1px solid rgba(99,102,241,0.2);">Via optimization</span>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="card-hover rounded-2xl p-6 sm:col-span-2 lg:col-span-1" style="background: linear-gradient(135deg, #0f0f1a, #0a0a14); border: 1px solid rgba(56,189,248,0.3); box-shadow: 0 0 20px rgba(56,189,248,0.08), inset 0 0 20px rgba(56,189,248,0.03);">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.3);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <h3 class="text-white font-semibold text-lg mb-3">Manufacturability Check</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-5">Automatically validates your design against JLCPCB, PCBWay, and Oshpark design rules. One-click DFM report with annotated Gerbers ready to send.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="text-xs px-2.5 py-1 rounded-full" style="background: rgba(56,189,248,0.1); color: #7dd3fc; border: 1px solid rgba(56,189,248,0.2);">DFM report</span>
+          <span class="text-xs px-2.5 py-1 rounded-full" style="background: rgba(56,189,248,0.1); color: #7dd3fc; border: 1px solid rgba(56,189,248,0.2);">Gerber export</span>
+          <span class="text-xs px-2.5 py-1 rounded-full" style="background: rgba(56,189,248,0.1); color: #7dd3fc; border: 1px solid rgba(56,189,248,0.2);">BOM matching</span>
+        </div>
+      </div>
     </div>
-
-    <div class="card">
-        <h3>3. Generate</h3>
-        <p>Footprint is created automatically</p>
-    </div>
-
-    <div class="card">
-        <h3>4. Export</h3>
-        <p>Download Altium-ready script</p>
-    </div>
-</div>
-```
-
+  </div>
 </section>
 
-<section class="section">
-    <h2>Why Use This?</h2>
-
-```
-<div class="steps">
-    <div class="card">
-        <h3>⚡ Faster Design</h3>
-        <p>No more manual footprint creation</p>
+<!-- DEMO: BEFORE / AFTER -->
+<section id="demo" class="py-28" style="background: linear-gradient(180deg, #0a0a0f 0%, #0d0b18 50%, #0a0a0f 100%);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #6366f1;">See it in action</p>
+      <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">Before vs. After Sparkgap.AI</h2>
+      <p class="text-gray-500 text-sm max-w-lg mx-auto">Same schematic. Same constraints. Dramatically different results — in under 8 seconds.</p>
     </div>
 
-    <div class="card">
-        <h3>🎯 Accurate</h3>
-        <p>Based on datasheet dimensions</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+      <!-- Before -->
+      <div class="rounded-2xl p-px" style="background: linear-gradient(135deg, rgba(255,100,100,0.3), rgba(100,100,100,0.1));">
+        <div class="rounded-2xl p-5" style="background: #0f0f18;">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-xs font-semibold px-3 py-1 rounded-full" style="background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3);">BEFORE — Manual</span>
+            <span class="text-xs text-gray-600">6.5 hours</span>
+          </div>
+          <div class="rounded-xl h-56 relative" style="background: #080810; border: 1px solid rgba(255,255,255,0.05);">
+            <svg class="absolute inset-0 w-full h-full opacity-60" viewBox="0 0 400 260">
+              <!-- Messy routing -->
+              <path d="M 50 50 L 350 50 L 350 200 L 50 200 L 50 50" stroke="rgba(255,255,255,0.05)" stroke-width="1" fill="none"/>
+              <path d="M 80 80 L 320 80" stroke="#ef4444" stroke-width="2" fill="none" opacity="0.5" stroke-dasharray="4,3"/>
+              <path d="M 80 80 L 80 180 L 320 180" stroke="#ef4444" stroke-width="2" fill="none" opacity="0.4" stroke-dasharray="4,3"/>
+              <path d="M 200 80 L 200 120 L 150 120 L 150 180" stroke="#f59e0b" stroke-width="1.5" fill="none" opacity="0.5"/>
+              <path d="M 150 120 L 250 120 L 250 60 L 320 60" stroke="#f59e0b" stroke-width="1.5" fill="none" opacity="0.4" stroke-dasharray="3,2"/>
+              <path d="M 100 130 L 300 130 L 300 160 L 100 160 L 100 130" stroke="#ef4444" stroke-width="1" fill="none" opacity="0.3"/>
+              <!-- Chaotic vias -->
+              <circle cx="200" cy="80" r="5" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.6"/>
+              <circle cx="150" cy="120" r="5" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.6"/>
+              <circle cx="250" cy="120" r="5" fill="none" stroke="#ef4444" stroke-width="1.5" opacity="0.6"/>
+              <circle cx="300" cy="60" r="5" fill="none" stroke="#ef4444" stroke-width="1.5" opacity="0.6"/>
+              <!-- Components scattered -->
+              <rect x="60" y="60" width="40" height="30" rx="2" fill="none" stroke="#6b7280" stroke-width="1" opacity="0.7"/>
+              <rect x="300" y="140" width="30" height="30" rx="2" fill="none" stroke="#6b7280" stroke-width="1" opacity="0.7"/>
+              <rect x="170" y="150" width="50" height="25" rx="2" fill="none" stroke="#6b7280" stroke-width="1" opacity="0.5"/>
+            </svg>
+            <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+              <span class="text-xs font-mono text-red-400 opacity-80">14 DRC errors · 62 unrouted</span>
+              <span class="text-xs text-gray-600">v1.2</span>
+            </div>
+          </div>
+          <div class="mt-4 grid grid-cols-3 gap-3">
+            <div class="rounded-lg p-3 text-center" style="background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.15);">
+              <p class="text-red-400 font-bold text-lg">14</p>
+              <p class="text-gray-600 text-xs mt-0.5">DRC errors</p>
+            </div>
+            <div class="rounded-lg p-3 text-center" style="background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.15);">
+              <p class="text-red-400 font-bold text-lg">6.5h</p>
+              <p class="text-gray-600 text-xs mt-0.5">time spent</p>
+            </div>
+            <div class="rounded-lg p-3 text-center" style="background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.15);">
+              <p class="text-red-400 font-bold text-lg">62</p>
+              <p class="text-gray-600 text-xs mt-0.5">unrouted</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- After -->
+      <div class="rounded-2xl p-px" style="background: linear-gradient(135deg, rgba(139,92,246,0.6), rgba(99,102,241,0.3));">
+        <div class="rounded-2xl p-5" style="background: #0f0f18;">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-xs font-semibold px-3 py-1 rounded-full" style="background: rgba(139,92,246,0.2); color: #c084fc; border: 1px solid rgba(139,92,246,0.4);">AFTER — Sparkgap.AI</span>
+            <span class="text-xs text-gray-600">8 seconds</span>
+          </div>
+          <div class="rounded-xl h-56 relative" style="background: #080810; border: 1px solid rgba(139,92,246,0.2);">
+            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 260">
+              <!-- Clean routing -->
+              <path d="M 80 90 L 200 90" stroke="#a855f7" stroke-width="2" fill="none" opacity="0.9"/>
+              <path d="M 200 90 L 200 170 L 320 170" stroke="#a855f7" stroke-width="2" fill="none" opacity="0.9"/>
+              <path d="M 100 140 L 160 140 L 160 190 L 280 190" stroke="#6366f1" stroke-width="1.5" fill="none" opacity="0.8"/>
+              <path d="M 80 60 L 360 60" stroke="#38bdf8" stroke-width="1.5" fill="none" opacity="0.7"/>
+              <path d="M 240 90 L 360 90 L 360 140" stroke="#6366f1" stroke-width="1.5" fill="none" opacity="0.8"/>
+              <!-- Clean vias -->
+              <circle cx="200" cy="90" r="5" fill="#a855f7" opacity="0.8"/>
+              <circle cx="160" cy="140" r="5" fill="#6366f1" opacity="0.8"/>
+              <!-- MCU -->
+              <rect x="70" y="70" width="60" height="50" rx="4" fill="none" stroke="#a855f7" stroke-width="1.5" opacity="0.9"/>
+              <text x="100" y="98" text-anchor="middle" fill="#c084fc" font-size="8" font-family="monospace">MCU</text>
+              <!-- Other components neatly placed -->
+              <rect x="200" y="110" width="40" height="25" rx="3" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.8"/>
+              <rect x="310" y="155" width="40" height="25" rx="3" fill="none" stroke="#38bdf8" stroke-width="1.2" opacity="0.8"/>
+              <circle cx="280" cy="190" r="10" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="310" cy="190" r="10" fill="none" stroke="#6366f1" stroke-width="1.2" opacity="0.7"/>
+              <!-- AI glow highlight -->
+              <rect x="62" y="62" width="76" height="66" rx="6" fill="rgba(168,85,247,0.06)" stroke="#a855f7" stroke-width="0.8" stroke-dasharray="3,2" opacity="0.6"/>
+            </svg>
+            <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+              <span class="text-xs font-mono" style="color: #a855f7; text-shadow: 0 0 8px rgba(168,85,247,0.6);">0 DRC errors · 0 unrouted ✓</span>
+              <span class="text-xs text-gray-600">AI v3</span>
+            </div>
+          </div>
+          <div class="mt-4 grid grid-cols-3 gap-3">
+            <div class="rounded-lg p-3 text-center" style="background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.25);">
+              <p class="font-bold text-lg" style="color: #a855f7;">0</p>
+              <p class="text-gray-600 text-xs mt-0.5">DRC errors</p>
+            </div>
+            <div class="rounded-lg p-3 text-center" style="background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.25);">
+              <p class="font-bold text-lg" style="color: #a855f7;">8s</p>
+              <p class="text-gray-600 text-xs mt-0.5">time spent</p>
+            </div>
+            <div class="rounded-lg p-3 text-center" style="background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.25);">
+              <p class="font-bold text-lg" style="color: #a855f7;">0</p>
+              <p class="text-gray-600 text-xs mt-0.5">unrouted</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="card">
-        <h3>🧠 AI Assisted</h3>
-        <p>Extracts complex package data automatically</p>
+    <div class="text-center mt-10">
+      <a href="#waitlist" class="inline-flex items-center gap-2 text-sm font-medium transition-colors" style="color: #a855f7;">
+        Try it with your own schematic →
+      </a>
     </div>
-</div>
-```
-
+  </div>
 </section>
 
-<section class="section" id="upload">
-    <h2>Try It</h2>
+<!-- HOW IT WORKS -->
+<section id="how" class="py-28" style="background-color: #0a0a0f;">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #a855f7;">Process</p>
+      <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">From schematic to Gerbers<br class="hidden sm:block"/> in three steps</h2>
+      <p class="text-gray-500 text-sm max-w-lg mx-auto">No training required. No new tools to learn. Works with your existing KiCad, Altium, or Eagle files.</p>
+    </div>
 
-```
-<input type="file" id="fileInput" />
-<button onclick="uploadFile()">Generate Footprint</button>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto relative">
+      <!-- Connector line desktop -->
+      <div class="hidden md:block absolute top-10 left-1/4 right-1/4 h-px" style="background: linear-gradient(90deg, rgba(168,85,247,0.5), rgba(99,102,241,0.5));"></div>
 
-<p id="status"></p>
+      <!-- Step 1 -->
+      <div class="relative text-center">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full mb-6 mx-auto relative" style="background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(99,102,241,0.1)); border: 1px solid rgba(168,85,247,0.4); box-shadow: 0 0 30px rgba(168,85,247,0.2);">
+          <span class="text-2xl font-bold" style="color: #a855f7;">01</span>
+          <div class="absolute -inset-1 rounded-full" style="background: radial-gradient(ellipse, rgba(168,85,247,0.15) 0%, transparent 70%); filter: blur(4px);"></div>
+        </div>
+        <h3 class="text-white font-semibold text-lg mb-3">Import schematic</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Upload your .kicad_sch, .SchDoc, or .sch file. Sparkgap parses your netlist, component library, and design constraints automatically.</p>
+        <div class="mt-4 inline-flex items-center gap-2 text-xs text-gray-600">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          KiCad · Altium · Eagle · OrCAD
+        </div>
+      </div>
 
-<pre id="output">No data yet...</pre>
-```
+      <!-- Step 2 -->
+      <div class="relative text-center">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full mb-6 mx-auto relative" style="background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(168,85,247,0.1)); border: 1px solid rgba(99,102,241,0.4); box-shadow: 0 0 30px rgba(99,102,241,0.2);">
+          <span class="text-2xl font-bold" style="color: #6366f1;">02</span>
+          <div class="absolute -inset-1 rounded-full" style="background: radial-gradient(ellipse, rgba(99,102,241,0.15) 0%, transparent 70%); filter: blur(4px);"></div>
+        </div>
+        <h3 class="text-white font-semibold text-lg mb-3">AI generates layout</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Our model places components by functional block, routes power planes first, then signal traces — respecting all your constraints in one shot.</p>
+        <div class="mt-4 inline-flex items-center gap-2 text-xs text-gray-600">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          Avg. 8.2 seconds per board
+        </div>
+      </div>
 
+      <!-- Step 3 -->
+      <div class="relative text-center">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full mb-6 mx-auto relative" style="background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(99,102,241,0.1)); border: 1px solid rgba(56,189,248,0.4); box-shadow: 0 0 30px rgba(56,189,248,0.15);">
+          <span class="text-2xl font-bold" style="color: #38bdf8;">03</span>
+          <div class="absolute -inset-1 rounded-full" style="background: radial-gradient(ellipse, rgba(56,189,248,0.1) 0%, transparent 70%); filter: blur(4px);"></div>
+        </div>
+        <h3 class="text-white font-semibold text-lg mb-3">Review &amp; export</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Step through the AI's reasoning, make tweaks in the interactive editor, then export DRC-clean Gerbers and a full BOM — ready for the fab.</p>
+        <div class="mt-4 inline-flex items-center gap-2 text-xs text-gray-600">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Gerber · ODB++ · IPC-2581
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<footer>
-    Built for PCB Engineers • AI + Hardware
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="py-28" style="background: linear-gradient(180deg, #0a0a0f 0%, #0d0b18 100%);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #a855f7;">Testimonials</p>
+      <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Engineers who tried early<br class="hidden sm:block"/> won't go back</h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- T1 -->
+      <div class="rounded-2xl p-6 glow-border card-hover" style="background: #0f0f1a;">
+        <div class="flex gap-1 mb-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#a855f7"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#a855f7"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#a855f7"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#a855f7"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#a855f7"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-6">"I used Sparkgap.AI on a 6-layer RF board that was giving me nightmares. In 12 seconds I had a layout that passed SI checks first try. That's a whole day back in my life."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0" style="background: linear-gradient(135deg, #a855f7, #6366f1);">MR</div>
+          <div>
+            <p class="text-white text-sm font-semibold">Marcus Reinholt</p>
+            <p class="text-gray-600 text-xs">Senior Hardware Engineer, Neuralink</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- T2 -->
+      <div class="rounded-2xl p-6 glow-border-indigo card-hover" style="background: #0f0f1a;">
+        <div class="flex gap-1 mb-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#6366f1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#6366f1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#6366f1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#6366f1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#6366f1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-6">"As a solo founder building hardware, I can't afford a dedicated PCB layout engineer. Sparkgap.AI is basically a senior engineer in my browser. Our first batch came back spotless."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0" style="background: linear-gradient(135deg, #6366f1, #38bdf8);">AK</div>
+          <div>
+            <p class="text-white text-sm font-semibold">Aiko Tanaka</p>
+            <p class="text-gray-600 text-xs">Founder, Morph Wearables</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- T3 -->
+      <div class="rounded-2xl p-6 card-hover sm:col-span-2 lg:col-span-1" style="background: #0f0f1a; border: 1px solid rgba(56,189,248,0.25); box-shadow: 0 0 20px rgba(56,189,248,0.06);">
+        <div class="flex gap-1 mb-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#38bdf8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#38bdf8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#38bdf8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#38bdf8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#38bdf8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-6">"We ran Sparkgap.AI on 14 different board revisions in our test suite. It outperformed our in-house router on SI metrics 11 out of 14 times. The team is genuinely impressed."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0" style="background: linear-gradient(135deg, #38bdf8, #6366f1);">DL</div>
+          <div>
+            <p class="text-white text-sm font-semibold">Dr. Daniel Lehmann</p>
+            <p class="text-gray-600 text-xs">VP Engineering, Bosch Mobility</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section id="waitlist" class="py-28" style="background-color: #0a0a0f;">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mx-auto rounded-3xl p-px" style="background: linear-gradient(135deg, rgba(168,85,247,0.7), rgba(99,102,241,0.5), rgba(56,189,248,0.3));">
+      <div class="rounded-3xl px-8 py-16 sm:px-16 text-center relative" style="background: #0d0b18;">
+        <div class="absolute inset-0 rounded-3xl pointer-events-none" style="background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139,92,246,0.12) 0%, transparent 70%);"></div>
+        <div class="relative">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-xs font-medium" style="background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.3); color: #c084fc;">
+            <span class="w-1.5 h-1.5 rounded-full bg-purple-400" style="box-shadow: 0 0 6px #a855f7;"></span>
+            Limited early access — 2,400+ already waiting
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4 tracking-tight">Get early access<br/>to Sparkgap.AI</h2>
+          <p class="text-gray-500 text-sm mb-10 max-w-md mx-auto leading-relaxed">Join the waitlist and be the first to design PCBs at the speed of thought. Early members get 3 months free on launch.</p>
+          <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <input type="email" placeholder="you@company.com" class="flex-1 px-5 py-4 rounded-xl text-sm text-white placeholder-gray-600 focus:outline-none transition-all" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(139,92,246,0.3);" onfocus="this.style.borderColor='rgba(168,85,247,0.7)'; this.style.boxShadow='0 0 20px rgba(168,85,247,0.15)';" onblur="this.style.borderColor='rgba(139,92,246,0.3)'; this.style.boxShadow='none';"/>
+            <button class="w-full sm:w-auto px-7 py-4 rounded-xl text-white font-semibold text-sm transition-all hover:scale-105 flex-shrink-0" style="background: linear-gradient(135deg, #a855f7, #6366f1); box-shadow: 0 0 20px rgba(139,92,246,0.4);">
+              Join waitlist
+            </button>
+          </div>
+          <p class="text-gray-700 text-xs mt-5">No spam. Unsubscribe any time. We hate newsletters too.</p>
+          <div class="mt-10 flex flex-wrap justify-center gap-8">
+            <div class="flex items-center gap-2 text-xs text-gray-500">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              SOC 2 compliant
+            </div>
+            <div class="flex items-center gap-2 text-xs text-gray-500">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Your IP stays yours
+            </div>
+            <div class="flex items-center gap-2 text-xs text-gray-500">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Dedicated onboarding
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="py-14 border-t" style="background-color: #0a0a0f; border-color: rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="flex items-center gap-2">
+        <div class="w-7 h-7 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #a855f7, #6366f1);">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
+        <span class="text-white font-bold tracking-tight">Sparkgap<span style="color:#a855f7;">.AI</span></span>
+      </div>
+      <div class="flex flex-wrap justify-center gap-6 text-xs text-gray-600">
+        <a href="#" class="hover:text-gray-400 transition-colors">Privacy</a>
+        <a href="#" class="hover:text-gray-400 transition-colors">Terms</a>
+        <a href="#" class="hover:text-gray-400 transition-colors">Security</a>
+        <a href="#" class="hover:text-gray-400 transition-colors">Documentation</a>
+        <a href="#" class="hover:text-gray-400 transition-colors">Contact</a>
+      </div>
+      <p class="text-xs text-gray-700">© 2026 Sparkgap.AI, Inc. All rights reserved.</p>
+    </div>
+  </div>
 </footer>
-
-<script>
-function scrollToUpload() {
-    document.getElementById("upload").scrollIntoView({ behavior: "smooth" });
-}
-
-async function uploadFile() {
-    const file = document.getElementById("fileInput").files[0];
-    const status = document.getElementById("status");
-
-    if (!file) {
-        alert("Select a file first");
-        return;
-    }
-
-    status.innerText = "Processing...";
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-        const response = await fetch("http://127.0.0.1:8000/generate-footprint/", {
-            method: "POST",
-            body: formData
-        });
-
-        const result = await response.json();
-
-        document.getElementById("output").textContent =
-            JSON.stringify(result.data, null, 2);
-
-        status.innerText = "Done ✅";
-
-    } catch (err) {
-        status.innerText = "Error ❌ (backend not connected)";
-    }
-}
-</script>
-
 </body>
 </html>
